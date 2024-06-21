@@ -1,0 +1,15 @@
+{
+  "name": "bookbazaar",
+  "version": "1.0.0",
+  "description": "Projeto desenvolvido para entrega de desafio técnico para a Buzzmonitor",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dedev",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "sequelize": "^6.37.3"
+  }
+}
