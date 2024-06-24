@@ -1,27 +1,20 @@
-// models/pedido.js
-
 const { DataTypes } = require('sequelize');
+const sequelize = require('../config/sequelize');
 
-module.exports = (sequelize) => {
-    const Pedido = sequelize.define('Pedido', {
-        livroId: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: 'Books',
-                key: 'id'
-            }
-        },
-        quantidade: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
-        status: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            defaultValue: 'pendente'
-        }
-    });
+const Pedido = sequelize.define('Pedido', {
+  livroId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  quantidade: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  status: {
+    type: DataTypes.STRING,
+    defaultValue: 'pendente',
+    allowNull: false,
+  },
+});
 
-    return Pedido;
-};
+module.exports = Pedido;
