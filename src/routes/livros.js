@@ -4,13 +4,42 @@ const express = require('express');
 const router = express.Router();
 const Livro = require('../models/livro');
 
-// Criar um novo livro
+
+//rota para criar um lviro
+
 router.post('/', async (req, res) => {
     try {
-        const livro = await Livro.create(req.body);
-        res.status(201).json(livro);
+        const novoLivro = await Livro.create(req.body);
+        res.status(201).json(novoLivro);
     } catch (error) {
         res.status(400).json({ error: error.message });
+    }
+});
+
+// Rota para criar vários livros
+router.post('/bulk', async (req, res) => {
+    try {
+        const livrosParaCriar = req.body;
+        if (!Array.isArray(livrosParaCriar)) {
+            return res.status(400).json({ error: 'Corpo da requisição deve ser um array de livros' });
+        }
+
+        const livrosCriados = [];
+
+        for (let livroData of livrosParaCriar) {
+            const novoLivro = await Livro.create({
+                titulo: livroData.titulo,
+                autor: livroData.autor,
+                anoPublicacao: livroData.anoPublicacao,
+                estoque: livroData.estoque
+            });
+
+            livrosCriados.push(novoLivro);
+        }
+        
+        res.status(201).json(livrosCriados);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 });
 

@@ -1,14 +1,25 @@
-// app.js
-
 const express = require('express');
+const bodyParser = require('body-parser');
+const sequelize = require('./config/sequelize');
+const routesLivros = require('./routes/livros');
+const routesPedidos = require('./routes/pedidos');
+
 const app = express();
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
-const routes = require('./routes');
+app.use(bodyParser.json());
 
-app.use(express.json());
-app.use('/api', routes);
+// Rotas principais
+app.use('/livros', routesLivros);
+app.use('/pedidos', routesPedidos);
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
+// Iniciar o servidor
+sequelize.sync()
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log(`Servidor rodando na porta ${PORT}`);
+        });
+    })
+    .catch((error) => {
+        console.error('Erro ao iniciar o servidor:', error);
+    });
