@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
             return res.status(400).json({ error: 'Estoque insuficiente' });
         }
 
-        // Se houver estoque suficiente, criar o pedido
+        // Se houver estoque suficiente, cria o pedido
         const pedido = await Pedido.create({ livroId, quantidade });
 
         // Atualizar o estoque do livro
